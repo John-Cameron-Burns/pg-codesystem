@@ -1,0 +1,23 @@
+name: test
+on: [push, pull_request]
+jobs:
+  engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: engine tests and loader tests
+        run: make test
+      - name: engine tests under AddressSanitizer and UBSan
+        run: make sanitize
+  postgres:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pg: [13, 14, 15, 16, 17]
+    container: pgxn/pgxn-tools
+    steps:
+      - uses: actions/checkout@v4
+      - name: the 0.2.0 install script is the 0.1.0 one plus the upgrade
+        run: make verify-install-script
+      - name: build and run the regression tests on PostgreSQL ${{ matrix.pg }}
+        run: pg-start ${{ matrix.pg }} && pg-build-test

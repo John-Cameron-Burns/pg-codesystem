@@ -1,0 +1,116 @@
+-- a changed list is a new revision; values written under the old one keep decoding
+\set VERBOSITY terse
+\set SHOW_CONTEXT never
+DROP SCHEMA IF EXISTS t CASCADE;
+NOTICE:  drop cascades to 2 other objects
+DROP EXTENSION IF EXISTS codesystem;
+CREATE EXTENSION codesystem;
+CREATE SCHEMA t;
+SET search_path = t, public;
+CREATE TABLE stg (code text, level text, parent text, label text);
+INSERT INTO stg VALUES ('A','l','','one'), ('AB','m','A','two'), ('B','l','','three'), ('BC','m','B','four');
+\set levels '[{"name":"l","width":1,"charset":"[A-Z]","link":"none"},{"name":"m","width":2,"charset":"[A-Z]","link":"prefix"}]'
+SELECT define_code_system('rv', :'levels', 'SELECT * FROM stg');
+ define_code_system 
+--------------------
+                  1
+(1 row)
+
+CREATE TABLE kept (c code('rv'));
+INSERT INTO kept VALUES ('rv:BC');
+INSERT INTO kept VALUES ('rv:AB');
+SELECT c, code_revision(c) FROM kept ORDER BY c;
+   c   | code_revision 
+-------+---------------
+ rv:AB |             1
+ rv:BC |             1
+(2 rows)
+
+-- a code is added: A gets a second child, which shifts the rank of everything after it
+INSERT INTO stg VALUES ('AC','m','A','five');
+SELECT define_code_system('rv', :'levels', 'SELECT * FROM stg');
+ define_code_system 
+--------------------
+                  2
+(1 row)
+
+SELECT name, current_revision, ncodes, revisions FROM code_systems;
+ name | current_revision | ncodes | revisions 
+------+------------------+--------+-----------
+ rv   |                2 |      5 |         2
+(1 row)
+
+-- old values still mean what they meant, even though BC now has a different rank
+SELECT c, code_revision(c), code_label(c) FROM kept ORDER BY c;
+   c   | code_revision | code_label 
+-------+---------------+------------
+ rv:AB |             1 | two
+ rv:BC |             1 | four
+(2 rows)
+
+INSERT INTO kept VALUES ('rv:AC');
+SELECT c, code_revision(c) FROM kept ORDER BY c;
+   c   | code_revision 
+-------+---------------
+ rv:AB |             1
+ rv:BC |             1
+ rv:AC |             2
+(3 rows)
+
+-- values of different revisions of one system are all valid, and are the same code only if they are in the same revision
+SELECT 'rv:BC'::code = c AS same_as_new FROM kept WHERE c::text = 'BC';
+ same_as_new 
+-------------
+ f
+(1 row)
+
+SELECT count(*) FROM kept WHERE c::text = 'BC';
+ count 
+-------
+     1
+(1 row)
+
+SELECT code_children(code_ancestor('rv:AC', 'l'));
+ code_children 
+---------------
+ rv:AB
+ rv:AC
+(2 rows)
+
+-- a code removed is a revision too, and a code that no longer exists cannot be entered
+DELETE FROM stg WHERE code = 'AB';
+SELECT define_code_system('rv', :'levels', 'SELECT * FROM stg');
+ define_code_system 
+--------------------
+                  3
+(1 row)
+
+INSERT INTO kept VALUES ('rv:AB');
+ERROR:  "AB" is not a code of rv (revision 3) at character 26
+SELECT c, code_revision(c), code_label(c) FROM kept ORDER BY c::text, code_revision(c);
+   c   | code_revision | code_label 
+-------+---------------+------------
+ rv:AB |             1 | two
+ rv:AC |             2 | five
+ rv:BC |             1 | four
+(3 rows)
+
+-- the permanent rows
+SELECT system_id, revision, count(*) FROM codesystem_code GROUP BY 1, 2 ORDER BY 2;
+ system_id | revision | count 
+-----------+----------+-------
+         1 |        1 |     4
+         1 |        2 |     5
+         1 |        3 |     4
+(3 rows)
+
+SELECT revision, ncodes FROM codesystem_revision ORDER BY revision;
+ revision | ncodes 
+----------+--------
+        1 |      4
+        2 |      5
+        3 |      4
+(3 rows)
+
+DELETE FROM codesystem_revision WHERE revision = 1;
+ERROR:  codesystem_revision rows are permanent: stored codes are decoded with them

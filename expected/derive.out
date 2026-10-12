@@ -1,0 +1,262 @@
+-- derived standards (refines), rollup, current revisions, crosswalks
+\set VERBOSITY terse
+\set SHOW_CONTEXT never
+DROP SCHEMA IF EXISTS t CASCADE;
+NOTICE:  drop cascades to 2 other objects
+DROP EXTENSION IF EXISTS codesystem;
+CREATE EXTENSION codesystem;
+CREATE SCHEMA t;
+SET search_path = t, public;
+CREATE TABLE base_codes (code text, level text, parent text, label text);
+INSERT INTO base_codes VALUES
+ ('A','sec','','Agriculture'), ('B','sec','','Mining'),
+ ('01','div','A','Crop'), ('02','div','A','Forestry'), ('05','div','B','Coal'),
+ ('0111','cls','01','Cereals'), ('0112','cls','01','Rice'), ('0210','cls','02','Silviculture'), ('0510','cls','05','Hard coal');
+\set base_levels '[{"name":"sec","width":1,"charset":"[A-Z]","link":"none"},{"name":"div","width":2,"charset":"[0-9]","link":"grouping"},{"name":"cls","width":4,"charset":"[0-9]","link":"prefix"}]'
+\set uk_levels '[{"name":"sec","width":1,"charset":"[A-Z]","link":"none"},{"name":"div","width":2,"charset":"[0-9]","link":"grouping"},{"name":"cls","width":4,"charset":"[0-9]","link":"prefix"},{"name":"sub","width":5,"charset":"[0-9]","link":"prefix"}]'
+SELECT define_code_system('base', :'base_levels', 'SELECT * FROM base_codes');
+ define_code_system 
+--------------------
+                  1
+(1 row)
+
+CREATE TABLE uk_codes AS SELECT * FROM base_codes;
+INSERT INTO uk_codes VALUES ('01111','sub','0111','Wheat'), ('01112','sub','0111','Barley'), ('01120','sub','0112','Rice'),
+                            ('02100','sub','0210','Silviculture'), ('05100','sub','0510','Hard coal');
+SELECT define_code_system('uk', :'uk_levels', 'SELECT * FROM uk_codes', 'UK variant', 'Somebody', refines => 'base');
+ define_code_system 
+--------------------
+                  1
+(1 row)
+
+SELECT * FROM codesystem_derivation;
+ system_id | revision | base_system_id | base_revision | shared_levels 
+-----------+----------+----------------+---------------+---------------
+         2 |        1 |              1 |             1 |             3
+(1 row)
+
+-- the same again changes nothing
+SELECT define_code_system('uk', :'uk_levels', 'SELECT * FROM uk_codes', refines => 'base');
+ define_code_system 
+--------------------
+                  1
+(1 row)
+
+-- a third level of variation: a local system refining uk
+CREATE TABLE local_codes AS SELECT * FROM uk_codes;
+INSERT INTO local_codes VALUES ('011111','tail','01111','Winter wheat'), ('011112','tail','01111','Spring wheat'), ('011121','tail','01112','Malting barley'),
+                               ('011201','tail','01120','Paddy'), ('021001','tail','02100','Pine'), ('051001','tail','05100','Anthracite');
+SELECT define_code_system('local', '[{"name":"sec","width":1,"charset":"[A-Z]","link":"none"},{"name":"div","width":2,"charset":"[0-9]","link":"grouping"},{"name":"cls","width":4,"charset":"[0-9]","link":"prefix"},{"name":"sub","width":5,"charset":"[0-9]","link":"prefix"},{"name":"tail","width":6,"charset":"[0-9]","link":"prefix"}]',
+   'SELECT * FROM local_codes', refines => 'uk');
+ define_code_system 
+--------------------
+                  1
+(1 row)
+
+-- refusals
+SELECT define_code_system('x', :'uk_levels', 'SELECT * FROM uk_codes', refines => 'nosuch');
+ERROR:  refines: the code system "nosuch" is not defined
+SELECT define_code_system('x', :'uk_levels', 'SELECT * FROM uk_codes', refines => 'x');
+ERROR:  a code system cannot refine itself
+SELECT define_code_system('x', :'uk_levels', 'SELECT * FROM uk_codes', refines => 'base', shared_levels => 9);
+ERROR:  shared_levels must be from 1 to the number of levels of both systems (base has 3, this has 4)
+-- a code missing from the shared levels, and one that is not the base's
+CREATE TABLE short AS SELECT * FROM uk_codes WHERE code NOT IN ('0112', '01120');
+SELECT define_code_system('x', :'uk_levels', 'SELECT * FROM short', refines => 'base');
+ERROR:  x does not refine base: 1 problem(s)
+  1 code(s) of base are missing from the shared levels, e.g. '0112'
+CREATE TABLE extra AS SELECT * FROM uk_codes;
+INSERT INTO extra VALUES ('03','div','A','Fishing'), ('0310','cls','03','Sea fishing'), ('03100','sub','0310','Sea');
+SELECT define_code_system('x', :'uk_levels', 'SELECT * FROM extra', refines => 'base');
+ERROR:  x does not refine base: 1 problem(s)
+  2 code(s) of the shared levels are not in base (or have another parent), e.g. '03'
+-- a level that differs
+SELECT define_code_system('x', '[{"name":"sec","width":1,"charset":"[A-Z]","link":"none"},{"name":"div","width":2,"charset":"[0-9]","link":"grouping"},{"name":"class","width":4,"charset":"[0-9]","link":"prefix"}]',
+   $$SELECT code, CASE level WHEN 'cls' THEN 'class' ELSE level END, parent, label FROM base_codes$$, refines => 'base');
+ERROR:  x does not refine base: 1 problem(s)
+  level 3: base has cls (4 [0-9], prefix), x has class (4 [0-9], prefix)
+SELECT count(*) FROM codesystem_system WHERE name = 'x';
+ count 
+-------
+     0
+(1 row)
+
+-- rolling up
+SELECT code_rollup('uk:01111', 'base'), code_rollup('uk:0111', 'base'), code_rollup('uk:A', 'base'), code_rollup('uk:01111', 'uk');
+ code_rollup | code_rollup | code_rollup | code_rollup 
+-------------+-------------+-------------+-------------
+ base:0111   | base:0111   | base:A      | uk:01111
+(1 row)
+
+SELECT code_rollup('local:011111', 'uk'), code_rollup('local:011111', 'base'), code_rollup('local:0111', 'base');
+ code_rollup | code_rollup | code_rollup 
+-------------+-------------+-------------
+ uk:01111    | base:0111   | base:0111
+(1 row)
+
+SELECT code_rollup('base:0111', 'uk');
+ code_rollup 
+-------------
+ 
+(1 row)
+
+CREATE TABLE firms (name text, activity code('uk'));
+INSERT INTO firms VALUES ('a', 'uk:01111'), ('b', 'uk:01112'), ('c', 'uk:01120'), ('d', 'uk:05100');
+SELECT code_rollup(activity, 'base') AS base_class, count(*) FROM firms GROUP BY 1 ORDER BY 1;
+ base_class | count 
+------------+-------
+ base:0111  |     2
+ base:0112  |     1
+ base:0510  |     1
+(3 rows)
+
+SELECT code_rollup(code_ancestor(activity, 'div'), 'base') AS base_division, count(*) FROM firms GROUP BY 1 ORDER BY 1;
+ base_division | count 
+---------------+-------
+ base:01       |     3
+ base:05       |     1
+(2 rows)
+
+-- revisions: a new revision of uk compares equal to the old one after code_current()
+INSERT INTO uk_codes VALUES ('01113','sub','0111','Oats');
+SELECT define_code_system('uk', :'uk_levels', 'SELECT * FROM uk_codes', refines => 'base');
+ define_code_system 
+--------------------
+                  2
+(1 row)
+
+SELECT code_revision(activity), code_is_current(activity), code_current(activity) = 'uk:01120' AS same_after_current FROM firms WHERE name = 'c';
+ code_revision | code_is_current | same_after_current 
+---------------+-----------------+--------------------
+             1 | f               | t
+(1 row)
+
+SELECT activity = 'uk:01120' AS plain_equal, code_current(activity) = 'uk:01120' AS current_equal FROM firms WHERE name = 'c';
+ plain_equal | current_equal 
+-------------+---------------
+ f           | t
+(1 row)
+
+SELECT code_is_current('uk:01113'), code_is_current(activity) FROM firms WHERE name = 'a';
+ code_is_current | code_is_current 
+-----------------+-----------------
+ t               | f
+(1 row)
+
+DELETE FROM uk_codes WHERE code = '01112';
+SELECT define_code_system('uk', :'uk_levels', 'SELECT * FROM uk_codes', refines => 'base');
+ define_code_system 
+--------------------
+                  3
+(1 row)
+
+SELECT name, code_current(activity) FROM firms WHERE name = 'b';
+ERROR:  "01112" is not a code of uk (revision 3)
+SELECT revision, base_revision, shared_levels FROM codesystem_derivation d JOIN codesystem_system s ON s.id = d.system_id WHERE s.name = 'uk' ORDER BY revision;
+ revision | base_revision | shared_levels 
+----------+---------------+---------------
+        1 |             1 |             3
+        2 |             1 |             3
+        3 |             1 |             3
+(3 rows)
+
+DELETE FROM codesystem_derivation;
+ERROR:  codesystem_derivation rows are permanent: stored codes are decoded with them
+-- crosswalks: an old numbering and a new one
+CREATE TABLE old_codes (code text, level text, parent text, label text);
+INSERT INTO old_codes VALUES ('A','grp','',''), ('A1','item','A',''), ('A2','item','A',''), ('B1','item','B','') , ('B','grp','','');
+SELECT define_code_system('old', '[{"name":"grp","width":1,"charset":"[A-Z]","link":"none"},{"name":"item","width":2,"charset":"[A-Z0-9]","link":"prefix"}]', 'SELECT * FROM old_codes');
+ define_code_system 
+--------------------
+                  1
+(1 row)
+
+-- the query must name its columns
+SELECT define_crosswalk('old', 'base', $$VALUES ('A1','0111'), ('A2','0111'), ('A2','0112')$$);
+ERROR:  the query must return the columns from_code and to_code: column q.from_code does not exist
+SELECT define_crosswalk('old', 'nosuch', $$SELECT 'A1' AS from_code, '0111' AS to_code$$);
+ERROR:  the code system "nosuch" is not defined
+SELECT define_crosswalk('old', 'base', $$SELECT * FROM (VALUES ('A1','0111'), ('Z9','0111')) v(from_code, to_code)$$);
+ERROR:  the crosswalk from old to base is not valid: 1 problem(s)
+  1 from_code value(s) are not codes of old, e.g. 'Z9'
+SELECT define_crosswalk('old', 'base', $$SELECT * FROM (VALUES ('A1','0111'), ('A1','9999')) v(from_code, to_code)$$);
+ERROR:  the crosswalk from old to base is not valid: 1 problem(s)
+  1 to_code value(s) are not codes of base, e.g. '9999'
+SELECT define_crosswalk('old', 'base', $$SELECT 1$$);
+ERROR:  the query must return the columns from_code and to_code: column q.from_code does not exist
+SELECT define_crosswalk('old', 'base', $$SELECT * FROM (VALUES ('A1','0111'), ('A2','0111'), ('A2','0112'), ('B1','0210'), ('B1','0510')) v(from_code, to_code)$$);
+ define_crosswalk 
+------------------
+                5
+(1 row)
+
+SELECT define_crosswalk('old', 'base', $$SELECT * FROM (VALUES ('A1','0111'), ('A2','0111'), ('A2','0112'), ('B1','0210')) v(from_code, to_code)$$, allow_unmapped => true);
+NOTICE:  unmapped, as allowed:
+  1 finest-level code(s) of base have no counterpart in old, e.g. '0510'
+ define_crosswalk 
+------------------
+                4
+(1 row)
+
+SELECT * FROM code_crosswalks;
+ from_system | to_system | pairs | from_codes | to_codes |    shape     
+-------------+-----------+-------+------------+----------+--------------
+ old         | base      |     4 |          3 |        3 | many to many
+(1 row)
+
+SELECT define_crosswalk('old', 'base', $$SELECT * FROM (VALUES ('A1','0111'), ('A2','0111'), ('A2','0112'), ('B1','0210'), ('B1','0510')) v(from_code, to_code)$$, true);
+ define_crosswalk 
+------------------
+                5
+(1 row)
+
+SELECT * FROM code_crosswalks;
+ from_system | to_system | pairs | from_codes | to_codes |    shape     
+-------------+-----------+-------+------------+----------+--------------
+ old         | base      |     5 |          3 |        4 | many to many
+(1 row)
+
+SELECT code_map('old:A2', 'base'), code_map('old:B1', 'base');
+ code_map  | code_map  
+-----------+-----------
+ base:0111 | base:0210
+ base:0112 | base:0510
+(2 rows)
+
+SELECT code_map('base:0111', 'old');
+ code_map 
+----------
+ old:A1
+ old:A2
+(2 rows)
+
+SELECT code_map('base:0112', 'old'), code_map_unique('base:0112', 'old'), code_map_unique('base:0111', 'old'), code_map_unique('base:0510', 'old');
+ code_map | code_map_unique | code_map_unique | code_map_unique 
+----------+-----------------+-----------------+-----------------
+ old:A2   | old:A2          |                 | old:B1
+(1 row)
+
+SELECT code_map('old:A', 'base');
+ code_map 
+----------
+(0 rows)
+
+-- redefining replaces
+SELECT define_crosswalk('old', 'base', $$SELECT * FROM (VALUES ('A1','0111'), ('A2','0112'), ('B1','0210'), ('B1','0510')) v(from_code, to_code)$$, true);
+ define_crosswalk 
+------------------
+                4
+(1 row)
+
+SELECT * FROM code_crosswalks;
+ from_system | to_system | pairs | from_codes | to_codes |    shape    
+-------------+-----------+-------+------------+----------+-------------
+ old         | base      |     4 |          3 |        4 | one to many
+(1 row)
+
+SELECT count(*) FROM codesystem_crosswalk;
+ count 
+-------
+     4
+(1 row)
+

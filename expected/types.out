@@ -1,0 +1,221 @@
+-- the code type: input, output, the column lock, comparison, binary I/O
+\set VERBOSITY terse
+\set SHOW_CONTEXT never
+DROP SCHEMA IF EXISTS t CASCADE;
+NOTICE:  drop cascades to 3 other objects
+DROP EXTENSION IF EXISTS codesystem;
+CREATE EXTENSION codesystem;
+CREATE SCHEMA t;
+SET search_path = t, public;
+CREATE TABLE stg (code text, level text, parent text, label text);
+INSERT INTO stg VALUES
+ ('A','section','','Agriculture'), ('B','section','','Mining'),
+ ('01','division','A','Crop'), ('02','division','A','Forestry'), ('05','division','B','Coal'),
+ ('011','group','01','Annual crops'), ('012','group','01','Perennial crops'), ('021','group','02','Silviculture'), ('051','group','05','Hard coal'),
+ ('0111','class','011','Cereals'), ('0112','class','011','Rice'), ('0121','class','012','Grapes'), ('0210','class','021','Silviculture'), ('0510','class','051','Hard coal');
+SELECT define_code_system('toy', '[{"name":"section","width":1,"charset":"[A-Z]","link":"none"},{"name":"division","width":2,"charset":"[0-9]","link":"grouping"},{"name":"group","width":3,"charset":"[0-9]","link":"prefix"},{"name":"class","width":4,"charset":"[0-9]","link":"prefix"}]', 'SELECT * FROM stg');
+ define_code_system 
+--------------------
+                  1
+(1 row)
+
+SELECT define_code_system('mini', '[{"name":"all","width":2,"charset":"[A-Z]","link":"none"}]', $$SELECT * FROM (VALUES ('AB','all','','x'),('CD','all','','y')) v(code, level, parent, label)$$);
+ define_code_system 
+--------------------
+                  1
+(1 row)
+
+SELECT 'toy:0111'::code, 'toy:a'::code, 'toy:0111'::code::text, code_text('toy:0111'), code_from('0111', 'toy');
+   code   | code  | text | code_text | code_from 
+----------+-------+------+-----------+-----------
+ toy:0111 | toy:A | 0111 | 0111      | toy:0111
+(1 row)
+
+SELECT 'toy:9999'::code;
+ERROR:  "9999" is not a code of toy (revision 1) at character 8
+SELECT '0111'::code;
+ERROR:  invalid input for code: "0111" at character 8
+SELECT 'nosuch:01'::code;
+ERROR:  the code system "nosuch" is not defined at character 8
+SELECT code_from('0111', 'nosuch');
+ERROR:  the code system "nosuch" is not defined
+SELECT code_from('toy:0111', 'mini');
+ERROR:  "toy:0111" is a code of toy, not mini
+SELECT code_is_valid('0111', 'toy'), code_is_valid('9999', 'toy'), code_is_valid(NULL, 'toy'), code_is_valid('AB', 'mini');
+ code_is_valid | code_is_valid | code_is_valid | code_is_valid 
+---------------+---------------+---------------+---------------
+ t             | f             | f             | t
+(1 row)
+
+SELECT code_is_valid('x', 'nosuch');
+ERROR:  the code system "nosuch" is not defined
+-- a column locked to a system
+CREATE TABLE firms (name text, activity code('toy'));
+\d firms
+                    Table "t.firms"
+  Column  |   Type    | Collation | Nullable | Default 
+----------+-----------+-----------+----------+---------
+ name     | text      |           |          | 
+ activity | code(toy) |           |          | 
+
+-- a bare literal cannot know its column (PostgreSQL gives a literal's input function no type modifier), so SQL text qualifies it;
+-- a bare code is read from text: COPY, a text column, or a cast
+INSERT INTO firms VALUES ('plain', '0111');
+ERROR:  invalid input for code: "0111" at character 36
+INSERT INTO firms VALUES ('qualified', 'toy:0121');
+INSERT INTO firms VALUES ('from text', '0510'::text);
+INSERT INTO firms VALUES ('cast from text', '0210'::text::code('toy'));
+INSERT INTO firms SELECT 'from a column', c FROM (VALUES ('0112'::text)) v(c);
+INSERT INTO firms VALUES ('bad code', 'toy:9999');
+ERROR:  "9999" is not a code of toy (revision 1) at character 39
+INSERT INTO firms VALUES ('bad bare code', '9999'::text);
+ERROR:  "9999" is not a code of toy (revision 1)
+INSERT INTO firms VALUES ('other system', 'mini:AB');
+ERROR:  mini:AB is not a code of toy
+INSERT INTO firms VALUES ('wrong system named', 'mini:0111');
+ERROR:  "0111" is not a code of mini (revision 1) at character 49
+SELECT name, activity, activity::text AS bare, code_system(activity) FROM firms ORDER BY activity;
+      name      | activity | bare | code_system 
+----------------+----------+------+-------------
+ from a column  | toy:0112 | 0112 | toy
+ qualified      | toy:0121 | 0121 | toy
+ cast from text | toy:0210 | 0210 | toy
+ from text      | toy:0510 | 0510 | toy
+(4 rows)
+
+COPY firms FROM stdin;
+SELECT count(*) FROM firms;
+ count 
+-------
+     5
+(1 row)
+
+INSERT INTO firms VALUES ('a', 'toy:0112'), ('b', 'toy:0112');
+SELECT code_system(activity), count(*) FROM firms GROUP BY 1;
+ code_system | count 
+-------------+-------
+ toy         |     7
+(1 row)
+
+-- a column of any system
+CREATE TABLE anything (c code);
+INSERT INTO anything VALUES ('toy:0111'), ('mini:CD'), ('toy:A');
+SELECT c FROM anything ORDER BY c;
+    c     
+----------
+ toy:0111
+ toy:A
+ mini:CD
+(3 rows)
+
+SELECT min(c), max(c) FROM anything;
+   min    |   max   
+----------+---------
+ toy:0111 | mini:CD
+(1 row)
+
+INSERT INTO anything VALUES ('0111');
+ERROR:  invalid input for code: "0111" at character 30
+-- comparison, ordering and indexes: a coarser code sorts just before the finer ones
+SELECT 'toy:01'::code < 'toy:011'::code AND 'toy:011'::code < 'toy:0111'::code AND 'toy:0112'::code < 'toy:012'::code AS nested_order;
+ nested_order 
+--------------
+ t
+(1 row)
+
+SELECT array_agg(c ORDER BY c)::text FROM (SELECT code_children('toy:A') c UNION ALL SELECT 'toy:A') s;
+       array_agg       
+-----------------------
+ {toy:01,toy:02,toy:A}
+(1 row)
+
+CREATE INDEX ON firms (activity);
+SET enable_seqscan = off;
+SELECT name FROM firms WHERE activity = 'toy:0121';
+   name    
+-----------
+ qualified
+(1 row)
+
+SELECT count(*) FROM firms WHERE activity >= 'toy:0111' AND activity < 'toy:0210';
+ count 
+-------
+     4
+(1 row)
+
+RESET enable_seqscan;
+SELECT count(DISTINCT activity) FROM firms;
+ count 
+-------
+     4
+(1 row)
+
+SELECT count(*) FROM firms a JOIN firms b USING (activity);
+ count 
+-------
+    15
+(1 row)
+
+-- the binary form
+COPY (SELECT activity FROM firms ORDER BY activity) TO '/tmp/cs_codes.bin' (FORMAT binary);
+CREATE TABLE back (activity code('toy'));
+COPY back FROM '/tmp/cs_codes.bin' (FORMAT binary);
+SELECT count(*), count(*) FILTER (WHERE activity IS NOT NULL) FROM back;
+ count | count 
+-------+-------
+     7 |     7
+(1 row)
+
+CREATE TABLE wrongback (activity code('mini'));
+COPY wrongback FROM '/tmp/cs_codes.bin' (FORMAT binary);
+ERROR:  the code is not of this column's code system
+-- type modifiers
+SELECT code_name_hash('toy') = (SELECT name_hash FROM codesystem_system WHERE name = 'toy') AS hash_matches;
+ hash_matches 
+--------------
+ t
+(1 row)
+
+CREATE TABLE badmod (c code('Not A Name'));
+ERROR:  invalid type modifier "Not A Name" for code: expected the name of a code system at character 24
+CREATE TABLE badmod2 (c code('a', 'b'));
+ERROR:  code takes one type modifier, the name of a code system at character 25
+SELECT 'toy:0111'::code::code('mini');
+ERROR:  toy:0111 is not a code of mini
+SELECT 'toy:0111'::code::code('toy');
+   code   
+----------
+ toy:0111
+(1 row)
+
+SELECT format_type(atttypid, atttypmod) FROM pg_attribute WHERE attrelid = 'firms'::regclass AND attname = 'activity';
+ format_type 
+-------------
+ code(toy)
+(1 row)
+
+-- a column whose system is not defined here (as in a restore before the registry is loaded) can be declared, and fails loudly on use
+CREATE TABLE later (c code('not_yet'));
+INSERT INTO later VALUES ('not_yet:AB');
+ERROR:  the code system "not_yet" is not defined at character 27
+SELECT format_type(atttypid, atttypmod) FROM pg_attribute WHERE attrelid = 'later'::regclass AND attname = 'c';
+ format_type 
+-------------
+ code(?)
+(1 row)
+
+-- the list checker
+SELECT code_list_check(ARRAY['A','AB','B']);
+ code_list_check 
+-----------------
+               3
+(1 row)
+
+SELECT code_list_check(ARRAY['B','A']);
+ERROR:  the list of codes cannot be used: code 2 (A) does not come after code 1 (B): the list must be sorted in byte order, without duplicates
+SELECT code_list_check(ARRAY['A','A']);
+ERROR:  the list of codes cannot be used: code 2 (A) does not come after code 1 (A): the list must be sorted in byte order, without duplicates
+SELECT code_list_check(ARRAY['a']);
+ERROR:  the list of codes cannot be used: code 1 (a): write letters in upper case (codes are upper case; input is folded before matching)
+SELECT code_list_check('{}'::text[]);
+ERROR:  the list of codes is empty

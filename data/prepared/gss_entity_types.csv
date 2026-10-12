@@ -1,0 +1,207 @@
+code,level,parent,label
+E00,entity,,Output Areas
+E01,entity,,Lower layer Super Output Areas
+E02,entity,,Middle layer Super Output Areas
+E04,entity,,Civil Parishes
+E05,entity,,Electoral Wards/Divisions
+E06,entity,,Unitary Authorities
+E07,entity,,Non-metropolitan Districts
+E08,entity,,Metropolitan Districts
+E09,entity,,London Boroughs
+E10,entity,,Counties
+E11,entity,,Metropolitan Counties
+E12,entity,,Regions
+E13,entity,,Inner and Outer London
+E14,entity,,Westminster Parliamentary Constituencies
+E15,entity,,European Electoral Regions
+E16,entity,,Primary Care Trusts
+E17,entity,,Care Trusts
+E18,entity,,Strategic Health Authorities
+E19,entity,,Pan Strategic Health Authorities
+E20,entity,,Cancer Registries
+E21,entity,,Cancer Networks
+E22,entity,,Community Safety Partnerships
+E23,entity,,Police Force Areas
+E24,entity,,Local Learning and Skills Council areas
+E25,entity,,Primary Urban Areas
+E26,entity,,National Parks
+E27,entity,,New Deal for Communities
+E28,entity,,Registration Districts
+E29,entity,,Registration Sub-district
+E30,entity,,Travel to Work Areas
+E31,entity,,Fire and Rescue Authorities
+E32,entity,,London Assembly Constituencies
+E33,entity,,Workplace Zones
+E34,entity,,Built Up Areas (2011 Version)
+E35,entity,,Built Up Area sub-divisions (2011 Version)
+E36,entity,,Census Merged Wards
+E37,entity,,Local Enterprise Partnerships
+E38,entity,,Sub Integrated Care Board Locations
+E39,entity,,"NHS England (Region, Local Office)"
+E40,entity,,NHS England Regions
+E41,entity,,Census Merged Local Authority Districts
+E42,entity,,Census Merged Counties
+E43,entity,,Non-Civil Parished Areas
+E45,entity,,Public Health England Centres
+E46,entity,,Public Health England Regions
+E47,entity,,Combined Authorities
+E48,entity,,Local Resilience Forums
+E49,entity,,Enterprise Zones
+E50,entity,,Waste Authorities
+E51,entity,,Development Corporations
+E52,entity,,LEP - overlapping part
+E53,entity,,LEP - non overlapping part
+E54,entity,,Integrated Care Boards
+E55,entity,,Strategic Clinical Networks
+E56,entity,,Cancer Alliances
+E57,entity,,National Cancer Vanguards
+E58,entity,,County Electoral Divisions
+E59,entity,,Integrated Care Systems
+E60,entity,,Local Planning Authorities
+E61,entity,,Greater London Authority
+E62,entity,,National Landscapes (formerly AONB)
+E63,entity,,Built Up Areas
+E65,entity,,England Non-National Park Area
+E66,entity,,Grouped Local Authority Districts (Parishes)
+E67,entity,,Census Merged Local Authority Districts 2021
+E68,entity,,Grouped Lower Tier Local Authorities 2022
+E69,entity,,Local Skills Improvement Plan areas
+E92,entity,,Country
+J01,entity,,Major Towns and Cities
+J02,entity,,1961 Census Parishes
+J03,entity,,1961 Census Wards
+J04,entity,,1961 Census Districts
+J05,entity,,1961 Census Counties
+J06,entity,,Covid Infection Survey
+K01,entity,,Travel to Work Areas
+K02,entity,,United Kingdom
+K03,entity,,Great Britain
+K04,entity,,England and Wales
+K05,entity,,Built Up Areas (2011 Version)
+K06,entity,,Built Up Area sub divisions (2011 Version)
+K07,entity,,National Landscapes (formerly AONB)
+K08,entity,,Built Up Areas
+K99,entity,,Non-Standard Geography Categories
+L00,entity,,Strategic Health Authorities
+L93,entity,,British Crown Dependencies
+M00,entity,,Strategic Health Authorities
+M01,entity,,Primary Healthcare Directorate
+M83,entity,,British Crown Dependency
+N00,entity,,Small Areas
+N05,entity,,Westminster Parliamentary Constituencies
+N06,entity,,Westminster Parliamentary Constituencies
+N07,entity,,European Electoral Regions
+N08,entity,,Electoral Wards
+N09,entity,,Local Government Districts
+N10,entity,,District Electoral Areas
+N11,entity,,Settlement 2015
+N12,entity,,Travel to Work Areas
+N13,entity,,Local Planning Authorities
+N19,entity,,Workplace Zones
+N20,entity,,Data Zones
+N21,entity,,Super Data Zones
+N23,entity,,Police Force Areas
+N24,entity,,Police Force Districts
+N31,entity,,Northern Ireland Fire and Rescue Service
+N32,entity,,Northern Ireland Fire and Rescue Service Areas
+N33,entity,,Northern Ireland Fire and Rescue Service Districts
+N34,entity,,City Regions
+N92,entity,,Country
+S00,entity,,Output Areas
+S01,entity,,Data Zones
+S02,entity,,Intermediate Zones
+S03,entity,,Community Health Partnerships
+S04,entity,,Regeneration Outcome Agreement Areas - Scotland
+S05,entity,,Regeneration Outcome Areas - Community Planning Partnerships
+S06,entity,,Regeneration Outcome Areas - Local Areas
+S07,entity,,Regional Transport Partnerships
+S08,entity,,Health Board areas
+S09,entity,,Enterprise Regions
+S10,entity,,Urban Regeneration Companies
+S11,entity,,Strategic Development Plan Areas
+S12,entity,,Council Areas
+S13,entity,,Electoral Wards
+S14,entity,,Westminster Parliamentary Constituencies
+S15,entity,,European Electoral Regions
+S16,entity,,Scottish Parliamentary Constituencies
+S17,entity,,Scottish Parliamentary Regions
+S19,entity,,Localities
+S20,entity,,Settlements
+S21,entity,,National Parks
+S22,entity,,Travel to Work Areas
+S23,entity,,Police Force Areas
+S24,entity,,Highlands and Islands Enterprise
+S25,entity,,Community Justice Authorities
+S26,entity,,Community Health Partnerships sub-areas
+S27,entity,,ISD Health Board of Treatment
+S28,entity,,Census Detailed Characteristics
+S29,entity,,Census Local Characteristics
+S30,entity,,Local Administrative Units 1
+S31,entity,,Local Administrative Units 2
+S32,entity,,Scottish Police Divisions
+S33,entity,,Broad Rental Market Areas
+S34,entity,,Workplace Zones
+S35,entity,,Civil Parish
+S36,entity,,Island Groups
+S37,entity,,Integration Authorities
+S38,entity,,Scottish Fire and Rescue Service
+S39,entity,,Scottish Fire and Rescue Local Senior Officer Areas
+S40,entity,,Scottish Fire and Rescue Service Delivery Areas
+S41,entity,,Scottish Marine Regions
+S42,entity,,Scottish Local Resilience Partnerships
+S43,entity,,Scottish Regional Resilience Partnerships
+S44,entity,,Local Planning Authorities
+S45,entity,,Built Up Areas
+S47,entity,,Non-Standard Geography Categories
+S48,entity,,Scotttish Island Regions
+S52,entity,,Census Locality
+S53,entity,,Census Settlement
+S92,entity,,Country
+W00,entity,,Output Areas
+W01,entity,,Lower layer Super Output Areas
+W02,entity,,Middle layer Super Output Areas
+W03,entity,,Upper layer Super Output Areas
+W04,entity,,Communities
+W05,entity,,Electoral Wards
+W06,entity,,Unitary Authorities
+W07,entity,,Westminster Parliamentary Constituencies
+W08,entity,,European Electoral Regions
+W09,entity,,The Senedd Constituencies
+W10,entity,,The Senedd Electoral Regions
+W11,entity,,Local Health Boards
+W12,entity,,Cancer Registries
+W13,entity,,Cancer Networks
+W14,entity,,Community Safety Partnerships
+W15,entity,,Police Force Areas
+W16,entity,,"Department for Children, Education, Lifelong Learning and Skills, WG"
+W18,entity,,National Parks
+W19,entity,,Senedd Cymru Economic Regions
+W20,entity,,Registration Districts
+W21,entity,,Registration Sub-district
+W22,entity,,Travel to Work Areas
+W23,entity,,Spatial Plan Areas
+W24,entity,,Spatial Plan Sub-areas
+W25,entity,,Fire and Rescue Authorities
+W26,entity,,Strategic Regeneration Areas
+W27,entity,,Strategic Regeneration Sub-areas
+W28,entity,,Transport Consortia Areas
+W29,entity,,Agricultural Regions
+W30,entity,,Agricultural Small Areas
+W31,entity,,Wales Non-National Park Area
+W32,entity,,Non-Strategic Regeneration Area
+W33,entity,,Communities First Areas
+W34,entity,,Non-Communities First Areas
+W35,entity,,Workplace Zones
+W36,entity,,Footprint Regions for Public Service Collaboration
+W37,entity,,Built Up Areas (2011 Version)
+W38,entity,,Built Up Area sub-divisions (2011 Version)
+W39,entity,,Census Merged Wards
+W40,entity,,Census Merged Local Authority Districts
+W41,entity,,Local Resilience Forums
+W42,entity,,City Regions
+W43,entity,,Local Planning Authorities
+W44,entity,,National Landscapes (formerly AONB)
+W45,entity,,Built Up Areas
+W46,entity,,Grouped Local Authority Districts (Parishes)
+W47,entity,,Grouped Lower Tier Local Authorities 2022
+W92,entity,,Country

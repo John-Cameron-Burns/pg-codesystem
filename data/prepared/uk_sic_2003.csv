@@ -1,0 +1,700 @@
+code,level,parent,label
+01110,code,"",Growing of cereals and other crops n.e.c.
+01120,code,"","Growing of vegetables, horticultural specialities and nursery products"
+01131,code,"",Growing of wine grapes and table grapes and production of wine from self - produced grapes
+01139,code,"","Growing of other fruit, nuts, beverage and spice crops"
+01210,code,"","Farming of cattle, dairy farming"
+01220,code,"","Farming of sheep, goats, horses, asses, mules and hinnies"
+01230,code,"",Farming of swine
+01240,code,"",Farming of poultry
+01250,code,"",Other farming of animals
+01300,code,"",Growing of crops combined with farming of animals (mixed farming)
+01410,code,"",Agricultural service activities; landscape gardening
+01421,code,"",Farm animal boarding and care
+01429,code,"","Animal husbandry service activities, except veterinary activities, n.e.c."
+01500,code,"","Hunting, trapping and game propagation, including related service activities"
+02010,code,"",Forestry and logging
+02020,code,"",Forestry and logging related service activities
+05010,code,"",Fishing
+05020,code,"",Fish farming
+10101,code,"",Deep coal mines
+10102,code,"",Open cast coal working
+10103,code,"",Manufacture of solid fuel
+10200,code,"",Mining and agglomeration of lignite
+10300,code,"",Extraction and agglomeration of peat
+11100,code,"",Extraction of crude petroleum and natural gas
+11200,code,"","Service activities incidental to oil and gas extraction, excluding surveying"
+12000,code,"",Mining of uranium and thorium ores
+13100,code,"",Mining of iron ores
+13200,code,"","Mining of non-ferrous metal ores, except uranium and thorium ores"
+14110,code,"",Quarrying of  ornamental and building stone
+14120,code,"","Quarrying of limestone, gypsum and chalk"
+14130,code,"",Quarrying of slate
+14210,code,"",Operation of gravel and sand pits
+14220,code,"",Mining of clays and kaolin
+14300,code,"",Mining of chemical and fertilizer minerals
+14400,code,"",Production of salt
+14500,code,"",Other mining and quarrying n.e.c.
+15111,code,"",Slaughtering of animals other than poultry and rabbits
+15112,code,"",Animal by-product processing
+15113,code,"",Fellmongery
+15120,code,"",Production and preserving of poultry meat
+15131,code,"",Bacon and ham production
+15139,code,"",Other meat and poultry meat processing
+15201,code,"",Freezing of fish
+15209,code,"",Other fish processing and preserving
+15310,code,"",Processing and preserving of potatoes
+15320,code,"",Manufacture of fruit and vegetable juice
+15330,code,"",Processing and preserving of fruit and vegetables n.e.c.
+15410,code,"",Manufacture of crude oils and fats
+15420,code,"",Manufacture of refined oils and fats
+15430,code,"",Manufacture of margarine and similar edible fats
+15511,code,"",Liquid milk and cream production
+15512,code,"",Butter and cheese production
+15519,code,"",Manufacture of other milk products
+15520,code,"",Manufacture of ice cream
+15611,code,"",Grain milling
+15612,code,"",Manufacture of breakfast cereals and cereals-based food
+15620,code,"",Manufacture of starches and starch products
+15710,code,"",Manufacture of prepared feeds for farm animals
+15720,code,"",Manufacture of prepared pet foods
+15810,code,"",Manufacture of bread; manufacture of fresh pastry goods and cakes
+15820,code,"",Manufacture of rusks and biscuits; manufacture of preserved pastry goods and cakes
+15830,code,"",Manufacture of sugar
+15841,code,"",Manufacture of cocoa and  chocolate confectionery
+15842,code,"",Manufacture of sugar confectionery
+15850,code,"","Manufacture of macaroni, noodles, couscous and similar farinaceous products"
+15861,code,"",Tea processing
+15862,code,"",Production of coffee and coffee substitutes
+15870,code,"",Manufacture of condiments and seasonings
+15880,code,"",Manufacture of homogenized food preparations and dietetic food
+15891,code,"",Manufacture of soups
+15899,code,"",Manufacture of other food products n.e.c.
+15910,code,"",Manufacture of distilled potable alcoholic beverages
+15920,code,"",Production of ethyl alcohol from fermented materials
+15931,code,"",Manufacture of wine of fresh grapes and grape juice
+15932,code,"",Manufacture of wine based on concentrated grape must
+15941,code,"",Manufacture of cider and perry
+15949,code,"",Manufacture of other fermented fruit beverages
+15950,code,"",Manufacture of other non-distilled fermented beverages
+15960,code,"",Manufacture of beer
+15970,code,"",Manufacture of malt
+15980,code,"",Production of mineral waters and soft drinks
+16000,code,"",Manufacture of tobacco products
+17110,code,"",Preparation and spinning of cotton-type fibres
+17120,code,"",Preparation and spinning of woollen-type fibres
+17130,code,"",Preparation and spinning of worsted-type fibres
+17140,code,"",Preparation and spinning of flax-type fibres
+17150,code,"","Throwing and preparation of silk, including from noils, and throwing and texturing of synthetic or artificial filament yarns"
+17160,code,"",Manufacture of sewing threads
+17170,code,"",Preparation and spinning of other textile fibres
+17210,code,"",Cotton-type weaving
+17220,code,"",Woollen-type weaving
+17230,code,"",Worsted-type weaving
+17240,code,"",Silk-type weaving
+17250,code,"",Other textile weaving
+17300,code,"",Finishing of textiles
+17401,code,"",Manufacture of soft furnishings
+17402,code,"","manufacture of canvas goods, sacks, etc."
+17403,code,"",Manufacture of household textiles
+17511,code,"",Manufacture of woven carpets and rugs
+17512,code,"",Manufacture of tufted carpets and rugs
+17519,code,"",Manufacture of other carpets and rugs
+17520,code,"","Manufacture of cordage, rope, twine and netting"
+17530,code,"","Manufacture of non-wovens and articles made from non-wovens, except apparel"
+17541,code,"",Manufacture of lace
+17542,code,"",Manufacture of narrow fabrics
+17549,code,"",Manufacture of other textiles n.e.c.
+17600,code,"",Manufacture of knitted and crocheted fabrics
+17710,code,"",Manufacture of knitted and crocheted hosiery
+17720,code,"","Manufacture of knitted and crocheted pullovers, cardigans and similar articles"
+18100,code,"",Manufacture of leather clothes
+18210,code,"",Manufacture of workwear
+18221,code,"",Manufacture of other men's outerwear
+18222,code,"",Manufacture of other women's outerwear
+18231,code,"",Manufacture of men's underwear
+18232,code,"",Manufacture of women's underwear
+18241,code,"",Manufacture of hats
+18243,code,"","Cut, make and trim for clothing manufacturers"
+18249,code,"",Manufacture of other wearing apparel and accessories n.e.c.
+18300,code,"",Dressing and dyeing of fur; manufacture of articles of fur
+19100,code,"",Tanning and dressing of leather
+19200,code,"","Manufacture of luggage, handbags and the like, saddlery and harness"
+19300,code,"",Manufacture of footwear
+20100,code,"",Sawmilling and planing of wood; impregnation of wood
+20200,code,"","Manufacture of veneer sheets; manufacture of plywood, laminboard, particle board, fibre board and other panels and boards"
+20300,code,"",Manufacture of builders' carpentry and joinery
+20400,code,"",Manufacture of wooden containers
+20510,code,"",Manufacture of other products of wood
+20520,code,"","Manufacture of articles of cork, straw and plaiting materials"
+21110,code,"",Manufacture of pulp
+21120,code,"",Manufacture of paper and paperboard
+21211,code,"","Manufacture of corrugated paper and paperboard, sacks and bags"
+21213,code,"","Manufacture of cartons, boxes and cases of corrugated paper and paperboard"
+21214,code,"","Manufacture of cartons, boxes and cases of non-corrugated paper and paperboard"
+21215,code,"","Manufacture of cartons and similar containers of paper and paperboard specifically designed for carrying liquids, whether or not waxed"
+21219,code,"",Manufacture of other containers
+21220,code,"",Manufacture of household and sanitary goods and of toilet requisites
+21230,code,"",Manufacture of paper stationery
+21240,code,"",Manufacture of wallpaper
+21251,code,"",Manufacture of printed labels
+21252,code,"",Manufacture of unprinted labels
+21259,code,"",Manufacture of other articles of paper and paperboard n.e.c.
+22110,code,"",Publishing of books
+22120,code,"",Publishing of newspapers
+22130,code,"",Publishing of journals and periodicals
+22140,code,"",Publishing of sound recordings
+22150,code,"",Other publishing
+22210,code,"",Printing of newspapers
+22220,code,"",Other printing
+22230,code,"",Bookbinding
+22240,code,"",Pre-press activities
+22250,code,"",Ancillary activities related to printing
+22310,code,"",Reproduction of sound recording
+22320,code,"",Reproduction of video recording
+22330,code,"",Reproduction of computer media
+23100,code,"",Manufacture of coke oven products
+23201,code,"",Mineral oil refining
+23209,code,"",Other treatment of petroleum products (excluding petrochemicals manufacture)
+23300,code,"",Processing of nuclear fuel
+24110,code,"",Manufacture of industrial gases
+24120,code,"",Manufacture of dyes and pigments
+24130,code,"",Manufacture of other inorganic basic chemicals
+24140,code,"",Manufacture of other organic basic chemicals
+24150,code,"",Manufacture of fertilizers and nitrogen compounds
+24160,code,"",Manufacture of plastics in primary forms
+24170,code,"",Manufacture of synthetic rubber in primary forms
+24200,code,"",Manufacture of pesticides and other agro-chemical products
+24301,code,"","Manufacture of paints, varnishes and similar coatings"
+24302,code,"",Manufacture of printing ink
+24303,code,"",Manufacture of mastics and sealants
+24410,code,"",Manufacture of basic pharmaceutical products
+24421,code,"",Manufacture of medicaments
+24422,code,"",Manufacture of non-medicaments
+24511,code,"",Manufacture of soap and detergents
+24512,code,"",Manufacture of cleaning and polishing preparations
+24520,code,"",Manufacture of perfumes and toilet preparations
+24610,code,"",Manufacture of explosives
+24620,code,"",Manufacture of glues and gelatines
+24630,code,"",Manufacture of essential oils
+24640,code,"",Manufacture of photographic chemical material
+24650,code,"",Manufacture of prepared unrecorded media
+24660,code,"",Manufacture of other chemical products n.e.c.
+24700,code,"",Manufacture of man-made fibres
+25110,code,"",Manufacture of rubber tyres and tubes
+25120,code,"",Retreading and rebuilding of rubber tyres
+25130,code,"",Manufacture of other rubber products
+25210,code,"","Manufacture of plastic plates, sheets, tubes and profiles"
+25220,code,"",Manufacture of plastic packing goods
+25231,code,"",Manufacture of plastic floor covering
+25239,code,"",Manufacture of other builders' ware of plastic
+25240,code,"",Manufacture of other plastic products
+26110,code,"",Manufacture of flat glass
+26120,code,"",Shaping and processing of flat glass
+26130,code,"",Manufacture of hollow glass
+26140,code,"",Manufacture of glass fibres
+26150,code,"","Manufacture and processing of other glass, including technical glassware"
+26210,code,"",Manufacture of ceramic household and ornamental articles
+26220,code,"",Manufacture of ceramic sanitary fixtures
+26230,code,"",Manufacture of ceramic insulators and insulating fittings
+26240,code,"",Manufacture of other technical ceramic products
+26250,code,"",Manufacture of other ceramic products
+26260,code,"",Manufacture of refractory ceramic products
+26300,code,"",Manufacture of ceramic tiles and flags
+26400,code,"","Manufacture of bricks, tiles and construction products, in baked clay"
+26510,code,"",Manufacture of cement
+26520,code,"",Manufacture of lime
+26530,code,"",Manufacture of plaster
+26610,code,"",Manufacture of concrete products for construction purposes
+26620,code,"",Manufacture of plaster products for construction purposes
+26630,code,"",Manufacture of ready-mixed concrete
+26640,code,"",Manufacture of mortars
+26650,code,"",Manufacture of fibre cement
+26660,code,"","Manufacture of other articles of concrete, plaster and cement"
+26700,code,"","Cutting, shaping and finishing of ornamental and building stone"
+26810,code,"",Production of abrasive products
+26821,code,"",manufacture of asbestos
+26829,code,"",Manufacture of other non-metallic mineral products n.e.c.
+27100,code,"",Manufacture of basic iron and steel and of ferro-alloys
+27210,code,"",Manufacture of cast iron tubes
+27220,code,"",Manufacture of steel tubes
+27310,code,"",Cold drawing
+27320,code,"",Cold rolling of narrow strip
+27330,code,"",Cold forming or folding
+27340,code,"",Wire drawing
+27410,code,"",Precious metals production
+27420,code,"",Aluminium production
+27430,code,"","Lead, zinc and tin production"
+27440,code,"",Copper production
+27450,code,"",Other non-ferrous metal production
+27510,code,"",Casting of iron
+27520,code,"",Casting of steel
+27530,code,"",Casting of light metals
+27540,code,"",Casting of other non-ferrous metals
+28110,code,"",Manufacture of metal structures and parts of structures
+28120,code,"",Manufacture of builders' carpentry and joinery of metal
+28210,code,"","Manufacture of tanks, reservoirs and containers of metal"
+28220,code,"",Manufacture of central heating radiators and boilers
+28300,code,"","Manufacture of steam generators, except central heating hot water boilers"
+28400,code,"","Forging, pressing, stamping and roll forming of metal; powder metallurgy"
+28510,code,"",Treatment and coating of metals
+28520,code,"",General mechanical engineering
+28610,code,"",Manufacture of cutlery
+28620,code,"",Manufacture of tools
+28630,code,"",Manufacture of locks and hinges
+28710,code,"",Manufacture of steel drums and similar containers
+28720,code,"",Manufacture of light metal packaging
+28730,code,"",Manufacture of wire products
+28740,code,"","Manufacture of fasteners, screw machine products, chain and springs"
+28750,code,"",Manufacture of other fabricated metal products n.e.c.
+29110,code,"","Manufacture of engines and turbines, except aircraft, vehicle and cycle engines"
+29121,code,"",Manufacture of pumps
+29122,code,"",Manufacture of compressors
+29130,code,"",Manufacture of taps and valves
+29140,code,"","Manufacture of bearings, gears, gearing and driving elements"
+29210,code,"",Manufacture of furnaces and furnace burners
+29220,code,"",Manufacture of lifting and handling equipment
+29230,code,"",Manufacture of non-domestic cooling and ventilation equipment
+29240,code,"",Manufacture of other general purpose machinery n.e.c.
+29310,code,"",Manufacture of agricultural tractors
+29320,code,"",Manufacture of other agricultural and forestry machinery
+29410,code,"",Manufacture of portable hand held power tools
+29420,code,"",Manufacture of other metalworking machine tools
+29430,code,"",Manufacture of other machine tools n.e.c.
+29510,code,"",Manufacture of machinery for metallurgy
+29521,code,"",Manufacture of machinery for mining
+29522,code,"",Manufacture of earthmoving equipment
+29523,code,"",Manufacture of equipment for concrete crushing and screening and roadworks
+29530,code,"","Manufacture of machinery for food, beverage and tobacco processing"
+29540,code,"","Manufacture of machinery for textile, apparel and leather production"
+29550,code,"",Manufacture of machinery for paper and paperboard production
+29560,code,"",Manufacture of other special purpose machinery n.e.c.
+29600,code,"",Manufacture of weapons and ammunition
+29710,code,"",Manufacture of electric domestic appliances
+29720,code,"",Manufacture of non-electric domestic appliances
+30010,code,"",Manufacture of office machinery
+30020,code,"",Manufacture of computers and other information processing equipment
+31100,code,"","Manufacture of electric motors, generators and transformers"
+31200,code,"",Manufacture of electricity distribution and control apparatus
+31300,code,"",Manufacture of insulated wire and cable
+31400,code,"","Manufacture of accumulators, primary cells and primary batteries"
+31500,code,"",Manufacture of lighting equipment and electric lamps
+31610,code,"",Manufacture of electrical equipment for engines and vehicles n.e.c.
+31620,code,"",Manufacture of other electrical equipment n.e.c.
+32100,code,"",Manufacture of electronic valves and tubes and other electronic components
+32201,code,"",Manufacture of telegraph and telephone apparatus and equipment
+32202,code,"",Manufacture of radio and electronic capital goods
+32300,code,"","Manufacture of television and radio receivers, sound or video recording or reproducing apparatus and associated goods"
+33100,code,"",Manufacture of medical and surgical equipment and orthopaedic appliances
+33201,code,"","Manufacture of electronic instruments and appliances for measuring, checking, testing, navigating and other purposes, except industrial process control equipment"
+33202,code,"","Manufacture of non-electronic instruments and appliances for measuring, checking, testing, navigating and other purposes, except industrial process control equipment"
+33301,code,"",Manufacture of electronic industrial process control equipment
+33302,code,"",Manufacture of non-electronic industrial process control equipment
+33401,code,"",Manufacture of spectacles and unmounted lenses
+33402,code,"",Manufacture of optical precision instruments
+33403,code,"",Manufacture of photographic and cinematographic equipment
+33500,code,"",Manufacture of watches and clocks
+34100,code,"",Manufacture of motor vehicles
+34201,code,"",Manufacture of bodies (coachwork) for motor vehicles (except caravans)
+34202,code,"",Manufacture of trailers and semi-trailers
+34203,code,"",Manufacture of caravans
+34300,code,"",Manufacture of parts and accessories for motor vehicles and their engines
+35110,code,"",Building and repairing of ships
+35120,code,"",Building and repairing of pleasure and sporting boats
+35200,code,"",Manufacture of railway and tramway locomotives and rolling stock
+35300,code,"",Manufacture of aircraft and spacecraft
+35410,code,"",Manufacture of motorcycles
+35420,code,"",Manufacture of bicycles
+35430,code,"",Manufacture of invalid carriages
+35500,code,"",Manufacture of other transport equipment n.e.c.
+36110,code,"",Manufacture of chairs and seats
+36120,code,"",Manufacture of other office and shop furniture
+36130,code,"",Manufacture of other kitchen furniture
+36140,code,"",Manufacture of other furniture
+36150,code,"",Manufacture of mattresses
+36210,code,"",Striking of coins
+36220,code,"",Manufacture of jewellery and related articles n.e.c.
+36300,code,"",Manufacture of musical instruments
+36400,code,"",Manufacture of sports goods
+36501,code,"",Manufacture of professional and arcade games and toys
+36509,code,"","Manufacture of other games and toys, n.e.c."
+36610,code,"",Manufacture of imitation jewellery
+36620,code,"",Manufacture of brooms and brushes
+36631,code,"",Manufacture of miscellaneous stationers' goods
+36639,code,"",Other manufacturing n.e.c.
+37100,code,"",Recycling of metal waste and scrap
+37200,code,"",Recycling of non-metal waste and scrap
+40110,code,"",Production of electricity
+40120,code,"",Transmission of electricity
+40130,code,"",Distribution and trade of electricity
+40210,code,"",Manufacture of gas
+40220,code,"",Distribution and trade of gaseous fuels through mains
+40300,code,"",Steam and hot water supply
+41000,code,"","Collection, purification and distribution of water"
+45110,code,"",Demolition and wrecking of buildings; earth moving
+45120,code,"",Test drilling and boring
+45211,code,"",Construction of commercial buildings
+45212,code,"",Construction of domestic buildings
+45213,code,"",Construction of civil engineering constructions
+45220,code,"",Erection of roof covering and frames
+45230,code,"","Construction of motorways, roads, airfields and sport facilities"
+45240,code,"",Construction of water projects
+45250,code,"",Other construction work involving special trades
+45310,code,"",Installation of electrical wiring and fittings
+45320,code,"",Insulation work activities
+45330,code,"",Plumbing
+45340,code,"",Other building installation
+45410,code,"",Plastering
+45420,code,"",Joinery installation
+45430,code,"",Floor and wall covering
+45440,code,"",Painting and glazing
+45450,code,"",Other building completion
+45500,code,"",Renting of construction or demolition equipment with operator
+50101,code,"",Sale of  new motor vehicles
+50102,code,"",Sale of used motor vehicles
+50200,code,"",Maintenance and repair of motor vehicles
+50300,code,"",Sale of motor vehicle parts and accessories
+50400,code,"","Sale, maintenance and repair of motorcycles and related parts and accessories"
+50500,code,"",Retail sale of automotive fuel
+51110,code,"","Agents involved in the sale of agricultural raw materials, live animals, textile raw materials and semi-finished goods"
+51120,code,"","Agents involved in the sale of fuels, ores, metals and industrial chemicals"
+51130,code,"",Agents involved in the sale of timber and building materials
+51140,code,"","Agents involved in the sale of machinery, industrial equipment, ships and aircraft"
+51150,code,"","Agents involved in the sale of furniture, household goods, hardware and ironmongery"
+51160,code,"","Agents involved in the sale of textiles, clothing, footwear and leather goods"
+51170,code,"","Agents involved in the sale of food, beverages and tobacco"
+51180,code,"",Agents specializing in the sale of particular products or ranges of products n.e.c.
+51190,code,"",Agents involved in the sale of a variety of goods
+51210,code,"","Wholesale of grain, seeds and animal feeds"
+51220,code,"",Wholesale of flowers and plants
+51230,code,"",Wholesale of live animals
+51241,code,"",Wholesale of furskins
+51249,code,"","Wholesale of hides, skins and leather n.e.c."
+51250,code,"",Wholesale of unmanufactured tobacco
+51310,code,"",Wholesale of fruit and vegetables
+51320,code,"",Wholesale of meat and meat products
+51331,code,"",Wholesale of dairy produce
+51332,code,"",Wholesale of eggs
+51333,code,"",Wholesale of edible oils and fats
+51341,code,"","Wholesale of fruit and vegetable juices, mineral water and soft drinks"
+51342,code,"","Wholesale of wine, beer, spirits and other alcoholic beverages"
+51350,code,"",Wholesale of tobacco products
+51360,code,"",Wholesale of sugar and chocolate and sugar confectionery
+51370,code,"","Wholesale of coffee, tea, cocoa and spices"
+51380,code,"","Wholesale of other food, including fish, crustaceans and molluscs"
+51390,code,"","Non-specialised wholesale of food, beverages and tobacco"
+51410,code,"",Wholesale of textiles
+51421,code,"",Wholesale of adults' fur and leather clothing
+51422,code,"",Wholesale of children's and infants' clothing
+51423,code,"",Wholesale of footwear
+51429,code,"",Wholesale of clothing n.e.c.
+51431,code,"","Wholesale of gramophone records, audio tapes, compact discs and video tapes and of the equipment on which these are played"
+51439,code,"",Wholesale of electrical household appliances and radio and television goods
+51440,code,"","Wholesale of china and glassware, wallpaper and cleaning materials"
+51450,code,"",Wholesale of perfume and cosmetics
+51460,code,"",Wholesale of pharmaceutical goods
+51471,code,"",Wholesale of furniture
+51473,code,"",Wholesale of jewellery
+51474,code,"",Wholesale of imitation jewellery
+51475,code,"",Wholesale of musical instruments
+51476,code,"",Wholesale of photographic goods
+51477,code,"",Wholesale of toys and games
+51478,code,"",Wholesale of travel and fancy goods
+51479,code,"",Wholesale of other household goods n.e.c.
+51511,code,"",Wholesale of petroleum and petroleum products
+51519,code,"",Wholesale of other fuels and related products
+51520,code,"",Wholesale of metals and metal ores
+51530,code,"","Wholesale of wood, construction materials and sanitary equipment"
+51540,code,"","Wholesale of hardware, plumbing and heating equipment and supplies"
+51550,code,"",Wholesale of chemical products
+51560,code,"",Wholesale of other intermediate products
+51570,code,"",Wholesale of waste and scrap
+51810,code,"",Wholesale of machine tools
+51820,code,"","Wholesale of mining, construction and civil engineering machinery"
+51830,code,"",Wholesale of machinery for the textile industry and of sewing and knitting machines
+51840,code,"","Wholesale of computers, computer peripheral equipment and software"
+51850,code,"",Wholesale of other office machinery and equipment
+51860,code,"",Wholesale of other electronic parts and equipment
+51870,code,"","Wholesale of other machinery for use in industry, trade and navigation"
+51880,code,"","Wholesale of agricultural machinery and accessories and implements, including tractors"
+51900,code,"",Other wholesale
+52111,code,"","Retail sale by confectioners, tobacconists and newsagents (CTNs)"
+52112,code,"","Retail sale in non-specialised stores holding an alcohol licence, with food, beverages or tobacco predominating"
+52113,code,"","Retail sale in non-specialised stores not holding an alcohol licence, with food, beverages or tobacco predominating"
+52120,code,"",Other retail sale in non-specialised stores
+52210,code,"",Retail sale of fruit and vegetables
+52220,code,"",Retail sale of meat and meat products
+52230,code,"","Retail sale of fish, crustaceans and molluscs"
+52240,code,"","Retail sale of bread, cakes, flour confectionery and sugar confectionery"
+52250,code,"",Retail sale of alcoholic and other beverages
+52260,code,"",Retail sale of tobacco products
+52270,code,"","Other retail sale of food, beverages and tobacco in specialised stores"
+52310,code,"",Dispensing chemists
+52321,code,"",Retail sale of hearing aids
+52329,code,"",Retail sale of medical and orthopaedic goods n.e.c.
+52330,code,"",Retail sale of cosmetic and toilet articles
+52410,code,"",Retail sale of textiles
+52421,code,"",Retail sale of adults' fur and leather clothing
+52422,code,"",Retail sale of children's and infants' clothing
+52423,code,"",Retail sale of other women's clothing
+52424,code,"",Retail sale of other men's clothing
+52431,code,"",Retail sale of footwear
+52432,code,"",Retail sale of leather goods
+52440,code,"","Retail sale of furniture, lighting equipment and household articles n.e.c."
+52450,code,"",Retail sale of electrical household appliances and radio and television goods
+52460,code,"","Retail sale of hardware, paints and glass"
+52470,code,"","Retail sale of books, newspapers and stationery"
+52481,code,"",Retail sale of floor coverings
+52482,code,"","Retail sale of photographic, optical and precision equipment, office supplies and equipment (incl. computers)"
+52484,code,"","Retail sale of jewellery, clocks and watches"
+52485,code,"","Retail sale of sports goods, games and toys, stamps and coins"
+52486,code,"",Retail sale in commercial art galleries
+52487,code,"",Retail sale by opticians
+52488,code,"",Retail sale of mobile telephones
+52489,code,"",Other retail sale  in specialised stores n.e.c.
+52501,code,"","Retail sale of antiques, including antique books, in stores"
+52509,code,"",Retail sale of other second-hand goods in stores
+52610,code,"",Retail sale via mail order houses
+52620,code,"",Retail sale via stalls and markets
+52630,code,"",Other non-store retail sale
+52710,code,"","Repair of boots, shoes and other articles of leather"
+52720,code,"",Repair of electrical household goods
+52730,code,"","Repair of watches, clocks and jewellery"
+52740,code,"",Repair n.e.c.
+55101,code,"",Hotels and motels with restaurant (licensed)
+55102,code,"",Hotels and motels with restaurant (unlicensed)
+55103,code,"",Hotels and motels without restaurant
+55210,code,"",Youth hostels and mountain refuges
+55220,code,"","Camping sites, including caravan sites"
+55231,code,"",Holiday centres and holiday villages
+55232,code,"",Other self-catering holiday accommodation
+55239,code,"",Other tourist or short-stay accommodation
+55301,code,"",Licensed restaurants
+55302,code,"",Unlicensed restaurants and cafes
+55303,code,"",Take-away food shops
+55304,code,"",Take-away mobile food stands
+55401,code,"",Licensed clubs
+55402,code,"",Independent public houses and bars
+55403,code,"",Tenanted public houses and bars
+55404,code,"",Managed public houses and bars
+55510,code,"",Canteens
+55520,code,"",Catering
+60101,code,"",Inter-city services
+60109,code,"",Other transport via railways
+60211,code,"",Inter-city coach service
+60213,code,"","Urban and suburban passenger railway transportation by underground, metro and similar systems"
+60219,code,"",Other scheduled passenger land transport n.e.c.
+60220,code,"",Taxi operation
+60231,code,"",Renting of buses and coaches
+60239,code,"",Other land passenger transport n.e.c.
+60241,code,"",Furniture removal activities
+60249,code,"",Freight transport by road n.e.c.
+60300,code,"",Transport via pipelines
+61101,code,"",Passenger sea and coastal water transport
+61102,code,"",Freight sea and coastal water transport
+61201,code,"",Passenger inland water transport
+61209,code,"",Other inland water transport
+62101,code,"",Scheduled passenger air transport
+62109,code,"",Other scheduled air transport
+62201,code,"",Non-scheduled passenger air transport
+62209,code,"",Other non-scheduled air transport
+62300,code,"",Space transport
+63110,code,"",Cargo handling
+63121,code,"",Storage and warehousing of frozen and refrigerated goods
+63122,code,"",Storage and warehousing of liquids or gases
+63123,code,"",Storage and warehousing of grain
+63129,code,"",Storage and warehousing n.e.c.
+63210,code,"",Other supporting land transport activities
+63220,code,"",Other supporting water transport activities
+63230,code,"",Other supporting air transport activities
+63301,code,"",Activities of travel agencies
+63302,code,"",Activities of travel organisers
+63303,code,"",Activities of tour guides
+63309,code,"",Other tourist assistance activities n.e.c.
+63400,code,"",Activities of other transport agencies
+64110,code,"",National post activities
+64120,code,"",Courier activities other than national post activities
+64200,code,"",Telecommunications
+65110,code,"",Central banking
+65121,code,"",Banks
+65122,code,"",Building societies
+65210,code,"",Financial leasing
+65221,code,"",Credit granting by non-deposit taking finance houses and other specialist consumer credit grantors
+65222,code,"",Factoring
+65223,code,"",Activities of mortgage finance companies
+65229,code,"",Other credit granting not elsewhere classified
+65231,code,"",Activities of investment trusts
+65232,code,"",Activities of unit trusts
+65233,code,"",Security dealing on own account
+65234,code,"",Activities of bank holding companies
+65235,code,"",Activities of venture and development capital companies
+65237,code,"",Activities of open-ended investment companies
+65238,code,"",Activities of property unit trusts
+65239,code,"",Financial intermediation not elsewhere classified
+66011,code,"",Life insurance
+66012,code,"",Life re-insurance
+66020,code,"",Pension funding
+66031,code,"",Non-life insurance
+66032,code,"",Non-life re-insurance
+67110,code,"",Administration of financial markets
+67121,code,"",Fund management activities
+67122,code,"",Security broking and fund management
+67130,code,"",Activities auxiliary to financial intermediation n.e.c.
+67200,code,"",Activities auxiliary to insurance and pension funding
+70110,code,"",Development and selling of real estate
+70120,code,"",Buying and selling of own real estate
+70201,code,"",Letting of conference and exhibition centres
+70209,code,"",Other letting of own property
+70310,code,"",Real estate agencies
+70320,code,"",Management of real estate on a fee or contract basis
+71100,code,"",Renting of automobiles
+71211,code,"",Renting of passenger land transport equipment
+71219,code,"",Renting of other land transport equipment
+71221,code,"",Renting of passenger water transport equipment
+71229,code,"",Renting of other water transport equipment
+71231,code,"",Renting of passenger air transport equipment
+71239,code,"",Renting of other air transport equipment
+71310,code,"",Renting of agricultural machinery and equipment
+71320,code,"",Renting of construction and civil engineering machinery and equipment
+71330,code,"","Renting of office machinery and equipment, including computers"
+71340,code,"",Renting of other machinery and equipment n.e.c.
+71401,code,"",Renting of sporting and recreational equipment
+71403,code,"","Renting of radios, televisions and video recorders and DVD players"
+71404,code,"",Renting of records and other pre-recorded media
+71405,code,"",Renting of video tapes and DVDs
+71409,code,"",Renting of other personal and household goods not elsewhere classified
+72100,code,"",Hardware consultancy
+72210,code,"",Publishing of software
+72220,code,"",Other software consultancy and supply
+72300,code,"",Data processing
+72400,code,"",Database activities
+72500,code,"","Maintenance and repair of office, accounting and computing machinery"
+72600,code,"",Other computer related activities
+73100,code,"",Research and experimental development on natural sciences and engineering
+73200,code,"",Research and experimental development on social sciences and humanities
+74111,code,"",Activities of patent and copyright agents
+74112,code,"",Barristers at law
+74113,code,"",Solicitors
+74119,code,"",Other legal activities not elsewhere classified
+74121,code,"",Accounting and auditing activities
+74122,code,"",Book-keeping activities
+74123,code,"",Tax consultancy
+74130,code,"",Market research and public opinion polling
+74141,code,"",Public relations activities
+74142,code,"",Financial management
+74143,code,"",General management consultancy activities
+74149,code,"","Business and management consultancy activities, n.e.c."
+74151,code,"",Management activities of wholesale holding companies
+74152,code,"",Management activities of transport holding companies
+74153,code,"",Management activities of construction holding companies
+74154,code,"",Management activities of catering holding companies
+74155,code,"",Management activities of motor trades holding companies
+74156,code,"",Management activities of service trades holding companies
+74157,code,"",Management activities of retail holding companies
+74158,code,"",Management activities of production holding companies
+74159,code,"",Management activities of other non-financial holding companies
+74201,code,"",Architectural activities
+74202,code,"",Urban planning and landscape architectural activities
+74203,code,"",Quantity surveying activities
+74204,code,"",Engineering consultative and design activities
+74205,code,"",Engineering design activities for industrial process and production
+74206,code,"",Engineering related scientific and technical consulting activities
+74209,code,"",Other engineering activities
+74300,code,"",Technical testing and analysis
+74401,code,"",Sale or leasing activities of advertising space or time
+74402,code,"","Planning, creation and placement of advertising activities"
+74409,code,"",Advertising activities not elsewhere classified
+74500,code,"",Labour recruitment and provision of personnel
+74601,code,"",Investigation activities
+74602,code,"",Security and related activities
+74701,code,"",Traditional cleaning services
+74702,code,"",Window cleaning services
+74703,code,"",Disinfecting and exterminating services
+74704,code,"",Specialised cleaning services
+74705,code,"",Furnace and chimney cleaning services
+74709,code,"",Cleaning activities not elsewhere classified
+74812,code,"",Portrait photographic activities
+74813,code,"",Other specialist photography
+74814,code,"",Film processing
+74819,code,"",Photographic activities not elsewhere classified
+74820,code,"",Packaging activities
+74850,code,"",Secretarial and translation activities
+74860,code,"",Call centre activities
+74871,code,"",Credit reporting and collection agency activities
+74872,code,"",Specialty design activities
+74873,code,"",Activities of exhibition and fair organisers
+74874,code,"",Activities of conference organisers
+74879,code,"",Other business activities not elsewhere classified
+75110,code,"",General (overall) public service activities
+75120,code,"","Regulation of the activities of agencies that provide health care, education, cultural services and other social services, excluding social security"
+75130,code,"",Regulation of and contribution to more efficient operation of business
+75140,code,"",Supporting service activities for the government as a whole
+75210,code,"",Foreign affairs
+75220,code,"",Defence activities
+75230,code,"",Justice and judicial activities
+75240,code,"","Public security, law and order activities"
+75250,code,"",Fire service activities
+75300,code,"",Compulsory social security activities
+80100,code,"",Primary education
+80210,code,"",General secondary education
+80220,code,"",Technical and vocational secondary education
+80301,code,"",Sub-degree level higher education
+80302,code,"",First-degree level higher education
+80303,code,"",Post-graduate level higher education
+80410,code,"",Driving school activities
+80421,code,"",Activities of private training providers
+80429,code,"",Other adult and other education n.e.c.
+85111,code,"","Public sector hospital activities, including NHS trusts"
+85112,code,"",Private sector hospital activities
+85113,code,"",Medical nursing home activities
+85120,code,"",Medical practice activities
+85130,code,"",Dental practice activities
+85140,code,"",Other human health activities
+85200,code,"",Veterinary activities
+85311,code,"",Charitable social work activities with accommodation
+85312,code,"",Non-charitable social work activities with accommodation
+85321,code,"",Charitable social work activities without accommodation
+85322,code,"",Non-charitable social work activities without accommodation
+90010,code,"",Collection and treatment of sewage
+90020,code,"",Collection and treatment of other waste
+90030,code,"","Sanitation, remediation and similar activities"
+91110,code,"",Activities of business and employers' organizations
+91120,code,"",Activities of professional organizations
+91200,code,"",Activities of trade unions
+91310,code,"",Activities of religious organizations
+91320,code,"",Activities of political organizations
+91330,code,"",Activities of other membership organizations n.e.c.
+92111,code,"",Motion picture production on film or video
+92119,code,"",Other motion picture and video production activities
+92120,code,"",Motion picture and video distribution
+92130,code,"",Motion picture projection
+92201,code,"",Radio activities
+92202,code,"",Television activities
+92311,code,"",Live theatrical presentations
+92319,code,"",Other artistic and literary creation and interpretation
+92320,code,"",Operation of arts facilities
+92330,code,"",Fair and amusement park activities
+92341,code,"",Dance halls and dancing instructor activities
+92349,code,"",Other entertainment activities not elsewhere classified
+92400,code,"",News agency activities
+92510,code,"",Library and archives activities
+92521,code,"",Museums activities
+92522,code,"",Preservation of historical sites and buildings
+92530,code,"",Botanical and zoological gardens and nature reserves activities
+92611,code,"",Operation of ice rinks and roller skating rinks
+92619,code,"",Operation of other sports arenas and stadiums not elsewhere classified
+92621,code,"",Activities of racehorse owners
+92629,code,"",Other sporting activities not elsewhere classified
+92710,code,"",Gambling and betting activities
+92721,code,"","Motion picture, television and other theatrical casting"
+92729,code,"",Other recreational activities not elsewhere classified
+93010,code,"",Washing and dry-cleaning of textile and fur products
+93020,code,"",Hairdressing and other beauty treatment
+93030,code,"",Funeral and related activities
+93040,code,"",Physical well-being activities
+93051,code,"",Operation of coin-operated photographic machines
+93059,code,"",Other service activities n.e.c.
+95000,code,"",Activities of households as employers of domestic staff
+96000,code,"",Undifferentiated goods producing activities of private households for own use
+97000,code,"",Undifferentiated services producing activities of private households for own use
+99000,code,"",Extra-territorial organizations and bodies

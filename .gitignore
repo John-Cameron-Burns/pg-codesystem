@@ -1,0 +1,14 @@
+# third-party source data: see data/SOURCES.md for where it came from and how to fetch it again
+data/raw/
+*.o
+*.so
+*.bc
+results/
+regression.diffs
+regression.out
+build/
+data/prepared/*
+!data/prepared/uk_sic_*.csv
+!data/prepared/nace_rev2.csv
+!data/prepared/gss_entity_types.csv
+dist/

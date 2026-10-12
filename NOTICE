@@ -1,0 +1,27 @@
+codesystem: third-party data included in this package
+
+The extension itself is licensed under the BSD licence in LICENSE. The following data files in data/prepared/ are third-party
+material, redistributed under their publishers' licences. Each has been converted to the prepared form (code, level, parent,
+label) and nothing else about its content has been changed, except where noted.
+
+NACE Rev.2 (data/prepared/nace_rev2.csv)
+    Data source: Statistik Austria, Klassifikationsdatenbank, NACE Rev. 2, published on the Austrian open data portal
+    (OGDEXT_KLASSDB_NACERev2_1) and listed at https://data.europa.eu/data/datasets/stat_nace-rev-2
+    Licence: Creative Commons Attribution (CC BY), as stated for that dataset on the European Data Portal.
+    Changes: converted from the CSV in the publisher's zip to the prepared form.
+
+UK Standard Industrial Classification 2007 and 2003, and the equivalence between them (data/prepared/uk_sic_*.csv)
+    Source: Office for National Statistics licensed under the Open Government Licence v.3.0.
+    Contains public sector information licensed under the Open Government Licence v3.0
+    (https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
+    Changes: converted to the prepared form; two mistyped codes in the ONS list (45119 for 45112, 82922 for 82912) were corrected
+    and one Companies House code (74990) left out. Details are in data/SOURCES.md.
+
+ONS GSS entity types (data/prepared/gss_entity_types.csv)
+    Source: Office for National Statistics licensed under the Open Government Licence v.3.0.
+    Contains public sector information licensed under the Open Government Licence v3.0.
+    From the Register of Geographic Codes. Changes: converted to the prepared form.
+
+Not included in this package, and subject to their owners' own terms: ISIC Rev.4 (© United Nations,
+https://www.un.org/en/about-us/terms-of-use) and ISCO-08 (© International Labour Organization,
+https://www.ilo.org/rights-and-permissions). The functions in tools/install_isic_isco.sql download them from the publishers on request.

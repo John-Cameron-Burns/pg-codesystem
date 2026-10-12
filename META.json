@@ -1,0 +1,45 @@
+{
+   "name": "codesystem",
+   "abstract": "Classification codes (SIC, SOC, ISIC, NACE, ISCO) and company numbers as a PostgreSQL column type that checks every value and knows its place in the hierarchy",
+   "description": "Stores industry, occupation and other classification codes, and company numbers, in a column that checks every value against the official list, so a mistyped code is refused. You can then ask any code for its title, its parent category or the section it belongs to, group a table by industry division, and translate codes between related standards, for example UK SIC to NACE to ISIC. When an official list is updated, the old and new versions are kept side by side, so stored codes keep their meaning.",
+   "version": "0.2.1",
+   "maintainer": "John Burns <john@impactdatametrics.com>",
+   "license": "bsd",
+   "provides": {
+      "codesystem": {
+         "file": "codesystem--0.2.0.sql",
+         "version": "0.2.0"
+      }
+   },
+   "prereqs": {
+      "runtime": {
+         "requires": {
+            "PostgreSQL": "13.0.0"
+         }
+      }
+   },
+   "resources": {
+      "bugtracker": {
+         "web": "https://github.com/John-Cameron-Burns/pg-codesystem/issues"
+      },
+      "repository": {
+         "url": "https://github.com/John-Cameron-Burns/pg-codesystem.git",
+         "web": "https://github.com/John-Cameron-Burns/pg-codesystem",
+         "type": "git"
+      }
+   },
+   "tags": [
+      "classification",
+      "SIC",
+      "SOC",
+      "ISIC",
+      "ISCO",
+      "NACE",
+      "hierarchy",
+      "codes"
+   ],
+   "meta-spec": {
+      "version": "1.0.0",
+      "url": "https://pgxn.org/meta/spec.txt"
+   }
+}

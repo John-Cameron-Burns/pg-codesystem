@@ -1,0 +1,5 @@
+# codesystem
+comment = 'Classification codes (SIC, SOC, ISIC, NACE, ISCO) and company numbers: validated, with their hierarchy'
+default_version = '0.2.0'
+module_pathname = '$libdir/codesystem'
+relocatable = true

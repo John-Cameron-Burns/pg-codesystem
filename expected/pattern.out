@@ -1,0 +1,195 @@
+-- pattern systems: identifiers with a syntax and no list (a company number), named parts, padding, and the guards
+\set VERBOSITY terse
+\set SHOW_CONTEXT never
+DROP SCHEMA IF EXISTS t CASCADE;
+NOTICE:  drop cascades to 7 other objects
+DROP EXTENSION IF EXISTS codesystem;
+CREATE EXTENSION codesystem;
+CREATE SCHEMA t;
+SET search_path = t, public;
+SELECT define_code_system_pattern('crn', $$/\d{8}|(?<prefix>SC|NI|OC)(?<number>\d{6})/$$, 'number', 'Company number', 'Companies House');
+ define_code_system_pattern 
+----------------------------
+                          1
+(1 row)
+
+SELECT name, kind, current_revision, ncodes, levels, pattern FROM code_systems;
+ name |  kind   | current_revision |  ncodes   |   levels   |                  pattern                  
+------+---------+------------------+-----------+------------+-------------------------------------------
+ crn  | pattern |                1 | 103000000 | number (8) | \d{8}|(?<prefix>SC|NI|OC)(?<number>\d{6})
+(1 row)
+
+-- the same codes, written another way, are not a new revision; a different pattern is
+SELECT define_code_system_pattern('crn', $$/(?<prefix>SC|NI|OC)(?<number>\d{6})|\d{8}/$$, 'number');
+ define_code_system_pattern 
+----------------------------
+                          1
+(1 row)
+
+SELECT define_code_system_pattern('crn', $$/\d{8}|(?<prefix>SC|NI|OC)(?<number>\d{6})/$$, 'number');
+ define_code_system_pattern 
+----------------------------
+                          1
+(1 row)
+
+SELECT 'crn:SC123456'::code, 'crn:01234567'::code, 'crn:sc123456'::code;
+     code     |     code     |     code     
+--------------+--------------+--------------
+ crn:SC123456 | crn:01234567 | crn:SC123456
+(1 row)
+
+SELECT 'crn:SX123456'::code;
+ERROR:  "SX123456" is not a code of crn (revision 1) at character 8
+SELECT 'crn:1234567'::code;
+ERROR:  "1234567" is not a code of crn (revision 1) at character 8
+SELECT 'crn:SC12345'::code;
+ERROR:  "SC12345" is not a code of crn (revision 1) at character 8
+SELECT code_text('crn:SC123456'), code_level('crn:SC123456'), code_parent('crn:SC123456'), code_ancestor('crn:SC123456', 'number'), code_label('crn:SC123456');
+ code_text | code_level | code_parent | code_ancestor | code_label 
+-----------+------------+-------------+---------------+------------
+ SC123456  | number     |             | crn:SC123456  | 
+(1 row)
+
+SELECT count(*) FROM code_children('crn:SC123456');
+ count 
+-------
+     0
+(1 row)
+
+-- named parts
+SELECT code_part('crn:SC123456', 'prefix'), code_part('crn:SC123456', 'number'), code_part('crn:01234567', 'prefix'), code_part('crn:01234567', 'number');
+ code_part | code_part | code_part | code_part 
+-----------+-----------+-----------+-----------
+ SC        | 123456    |           | 
+(1 row)
+
+SELECT code_parts('crn:SC123456'), code_parts('crn:01234567');
+              code_parts              | code_parts 
+--------------------------------------+------------
+ {"number": "123456", "prefix": "SC"} | {}
+(1 row)
+
+SELECT code_part('crn:SC123456', 'nosuch');
+ERROR:  crn has no part "nosuch"
+-- a column locked to the system, ordering, ranges
+CREATE TABLE firms (name text, crn code('crn'));
+INSERT INTO firms VALUES ('a', 'crn:SC000002');
+INSERT INTO firms VALUES ('b', '00000123'::text);
+INSERT INTO firms VALUES ('c', 'crn:NI000001');
+INSERT INTO firms VALUES ('d', 'crn:12345678');
+INSERT INTO firms VALUES ('e', 'crn:OC300001');
+INSERT INTO firms VALUES ('f', 'crn:SC123456');
+SELECT name, crn::text FROM firms ORDER BY crn;
+ name |   crn    
+------+----------
+ b    | 00000123
+ d    | 12345678
+ c    | NI000001
+ e    | OC300001
+ a    | SC000002
+ f    | SC123456
+(6 rows)
+
+-- digits sort before letters, as text does, and a prefix is one range
+SELECT name FROM firms WHERE crn BETWEEN code_first_with_prefix('SC', 'crn') AND code_last_with_prefix('SC', 'crn') ORDER BY crn;
+ name 
+------
+ a
+ f
+(2 rows)
+
+SELECT code_first_with_prefix('SC', 'crn'), code_last_with_prefix('SC', 'crn'), code_first_with_prefix('0', 'crn'), code_last_with_prefix('0', 'crn'), code_first_with_prefix('XX', 'crn');
+ code_first_with_prefix | code_last_with_prefix | code_first_with_prefix | code_last_with_prefix | code_first_with_prefix 
+------------------------+-----------------------+------------------------+-----------------------+------------------------
+ crn:SC000000           | crn:SC999999          | crn:00000000           | crn:09999999          | 
+(1 row)
+
+SELECT code_first_with_prefix('SC', 'nosuch');
+ERROR:  the code system "nosuch" is not defined
+SELECT code_part(crn, 'prefix') AS prefix, count(*) FROM firms GROUP BY 1 ORDER BY 1 NULLS FIRST;
+ prefix | count 
+--------+-------
+        |     2
+ NI     |     1
+ OC     |     1
+ SC     |     2
+(4 rows)
+
+INSERT INTO firms VALUES ('bad', 'crn:XX000001');
+ERROR:  "XX000001" is not a code of crn (revision 1) at character 34
+-- padding what a spreadsheet stripped
+SELECT code_from_padded('1234567', 'crn'), code_from_padded('123', 'crn'), code_from_padded('12345678', 'crn');
+ code_from_padded | code_from_padded | code_from_padded 
+------------------+------------------+------------------
+ crn:01234567     | crn:00000123     | crn:12345678
+(1 row)
+
+SELECT code_from_padded('SC123', 'crn');
+ERROR:  code_from_padded takes digits only, got "SC123"
+SELECT code_from_padded('123456789', 'crn');
+ERROR:  "123456789" is not a code of crn (revision 1)
+SELECT code_from_padded('1', 'nosuch');
+ERROR:  the code system "nosuch" is not defined
+-- the guards: a pattern whose parts are ambiguous, one that is not valid, one that is too big; a list is not a pattern
+SELECT define_code_system_pattern('amb', $$/(?<a>\d{1,2})(?<b>\d{1,2})/$$);
+ERROR:  the parts of this pattern are ambiguous: for example 000 can be split in more than one way
+SELECT define_code_system_pattern('bad1', $$/(\d{3}/$$);
+ERROR:  invalid pattern "/(\d{3}/": missing ")"
+SELECT define_code_system_pattern('bad2', $$/[A-Z0-9]{9}/$$);
+ERROR:  the pattern allows 101559956668416 codes, more than the 2^40 a code can number
+SELECT define_code_system_pattern('Bad Name', $$/\d{3}/$$);
+ERROR:  a code system name is lower case letters, digits and _, starting with a letter, at most 63 characters; got Bad Name
+SELECT define_code_system_pattern('crn', $$/\d{3}/$$, 'Level 1');
+ERROR:  a level name is lower case letters, digits and _; got Level 1
+SELECT count(*) FROM codesystem_system;
+ count 
+-------
+     1
+(1 row)
+
+CREATE TABLE stg AS SELECT 'A' AS code, 'l' AS level, '' AS parent, 'x' AS label;
+SELECT define_code_system('crn', '[{"name":"l","width":1,"charset":"[A-Z]","link":"none"}]', 'SELECT * FROM stg');
+ERROR:  a code system is either a list or a pattern, and this one is a pattern
+SELECT define_code_system('lst', '[{"name":"l","width":1,"charset":"[A-Z]","link":"none"}]', 'SELECT * FROM stg');
+ define_code_system 
+--------------------
+                  1
+(1 row)
+
+SELECT define_code_system_pattern('lst', $$/[A-Z]/$$);
+ERROR:  a code system is either a list or a pattern, and lst is a list
+-- a new pattern is a new revision; old values keep their meaning
+SELECT define_code_system_pattern('crn', $$/\d{8}|(?<prefix>SC|NI|OC|SO)(?<number>\d{6})/$$, 'number');
+ define_code_system_pattern 
+----------------------------
+                          2
+(1 row)
+
+SELECT name, current_revision, ncodes, revisions FROM code_systems WHERE name = 'crn';
+ name | current_revision |  ncodes   | revisions 
+------+------------------+-----------+-----------
+ crn  |                2 | 104000000 |         2
+(1 row)
+
+SELECT crn::text, code_revision(crn), code_is_current(crn), code_current(crn)::text FROM firms WHERE name IN ('a', 'b') ORDER BY name;
+   crn    | code_revision | code_is_current | code_current 
+----------+---------------+-----------------+--------------
+ SC000002 |             1 | f               | SC000002
+ 00000123 |             1 | f               | 00000123
+(2 rows)
+
+SELECT 'crn:SO000001'::code;
+     code     
+--------------
+ crn:SO000001
+(1 row)
+
+-- parts of a template, and a flat system without parts
+SELECT define_code_system_pattern('tmpl', 'AA-NNN');
+ define_code_system_pattern 
+----------------------------
+                          1
+(1 row)
+
+SELECT 'tmpl:ab123'::code, code_part('tmpl:AB123', 'x');
+ERROR:  tmpl has no named parts

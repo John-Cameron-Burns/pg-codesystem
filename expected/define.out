@@ -1,0 +1,107 @@
+-- defining a code system: what is accepted, and every way a definition is refused
+\set VERBOSITY terse
+\set SHOW_CONTEXT never
+DROP SCHEMA IF EXISTS t CASCADE;
+NOTICE:  schema "t" does not exist, skipping
+DROP EXTENSION IF EXISTS codesystem;
+NOTICE:  extension "codesystem" does not exist, skipping
+CREATE EXTENSION codesystem;
+CREATE SCHEMA t;
+SET search_path = t, public;
+CREATE TABLE stg (code text, level text, parent text, label text);
+INSERT INTO stg VALUES
+ ('A','section','','Agriculture'), ('B','section','','Mining'),
+ ('01','division','A','Crop'), ('02','division','A','Forestry'), ('05','division','B','Coal'),
+ ('011','group','01','Annual crops'), ('012','group','01','Perennial crops'), ('021','group','02','Silviculture'), ('051','group','05','Hard coal'),
+ ('0111','class','011','Cereals'), ('0112','class','011','Rice'), ('0121','class','012','Grapes'), ('0210','class','021','Silviculture'), ('0510','class','051','Hard coal');
+\set levels '[{"name":"section","width":1,"charset":"[A-Z]","link":"none","expected":2},{"name":"division","width":2,"charset":"[0-9]","link":"grouping","expected":3},{"name":"group","width":3,"charset":"[0-9]","link":"prefix","expected":4},{"name":"class","width":4,"charset":"[0-9]","link":"prefix","expected":5}]'
+SELECT define_code_system('toy', :'levels', 'SELECT * FROM stg', 'Toy classification', 'Nobody');
+ define_code_system 
+--------------------
+                  1
+(1 row)
+
+SELECT name, title, publisher, current_revision, ncodes, levels, revisions FROM code_systems;
+ name |       title        | publisher | current_revision | ncodes |                       levels                       | revisions 
+------+--------------------+-----------+------------------+--------+----------------------------------------------------+-----------
+ toy  | Toy classification | Nobody    |                1 |     14 | section (1) > division (2) > group (3) > class (4) |         1
+(1 row)
+
+-- the same codes again change nothing
+SELECT define_code_system('toy', :'levels', 'SELECT * FROM stg');
+ define_code_system 
+--------------------
+                  1
+(1 row)
+
+SELECT count(*) FROM codesystem_revision;
+ count 
+-------
+     1
+(1 row)
+
+-- refusals
+SELECT define_code_system('Bad Name', :'levels', 'SELECT * FROM stg');
+ERROR:  a code system name is lower case letters, digits and _, starting with a letter, at most 63 characters; got Bad Name
+SELECT define_code_system('x', '[]', 'SELECT * FROM stg');
+ERROR:  levels must be a JSON array of 1 to 8 levels, each {"name", "width", "charset", "link"[, "expected"]}
+SELECT define_code_system('x', '[{"name":"a","width":1,"charset":"[A-Z]","link":"prefix"}]', 'SELECT * FROM stg');
+ERROR:  the levels are not valid:
+  level 1 (a): the top level has no parent, so its link is none
+SELECT define_code_system('x', '[{"name":"a","width":1,"charset":"A-Z","link":"none"}]', 'SELECT * FROM stg');
+ERROR:  the levels are not valid:
+  level 1 (a): the charset must be a bracket expression such as [0-9] or [A-Z0-9]
+SELECT define_code_system('x', '[{"name":"a","width":1,"charset":"[A-Z]","link":"none"},{"name":"b","width":1,"charset":"[0-9]","link":"prefix"}]', 'SELECT * FROM stg');
+ERROR:  the levels are not valid:
+  level 2 (b): its width 1 must be more than the 1 of the level above, which it is the prefix of
+SELECT define_code_system('x', '[{"name":"a","width":1,"charset":"[A-Z]","link":"none"},{"name":"a","width":2,"charset":"[0-9]","link":"prefix"}]', 'SELECT * FROM stg');
+ERROR:  the levels are not valid:
+  two levels have the same name
+SELECT define_code_system('x', :'levels', 'SELECT code FROM stg');
+ERROR:  the query must return the columns code, level, parent and label: column q.level does not exist
+SELECT define_code_system('x', :'levels', 'SELECT * FROM stg WHERE false');
+ERROR:  the query returned no codes
+-- a mistake in the data: each is reported, with an example
+CREATE TABLE bad AS SELECT * FROM stg;
+INSERT INTO bad VALUES ('0111','class','011','Again'), ('Z9','division','A','Wrong characters'), ('03','division','Q','Orphan'),
+                       ('0301','class','03','Not the prefix'), ('07','nonsense','A','No such level'), ('C','section','A','Top with parent');
+SELECT define_code_system('x', :'levels', 'SELECT * FROM bad');
+ERROR:  x is not a valid code system: 11 problem(s)
+  1 code(s) name a level that is not defined, e.g. 'nonsense' (the levels are section, division, group, class)
+  1 code(s) are not the width and characters of their level, e.g. 'Z9'
+  1 code(s) appear more than once, e.g. '0111'
+  1 top-level code(s) name a parent, e.g. 'C'
+  2 code(s) have a parent that is not a code of the level above, e.g. '03'
+  1 code(s) have a parent that is not their own prefix, e.g. '0301'
+  3 section code(s), but the publisher says 2
+  5 division code(s), but the publisher says 3
+  7 class code(s), but the publisher says 5
+  1 division code(s) have no children, e.g. 'Z9'
+  1 section code(s) have no children, e.g. 'C'
+-- a code with no children, and a count that is not the publisher's
+CREATE TABLE childless AS SELECT * FROM stg WHERE code <> '0510';
+SELECT define_code_system('x', :'levels', 'SELECT * FROM childless');
+ERROR:  x is not a valid code system: 2 problem(s)
+  4 class code(s), but the publisher says 5
+  1 group code(s) have no children, e.g. '051'
+SELECT count(*) FROM codesystem_system WHERE name = 'x';
+ count 
+-------
+     0
+(1 row)
+
+-- the registry rows cannot be altered, apart from the titles
+UPDATE codesystem_code SET code = '9999' WHERE code = '0111';
+ERROR:  codesystem_code rows are permanent: stored codes are decoded with them
+DELETE FROM codesystem_code;
+ERROR:  codesystem_code rows are permanent: stored codes are decoded with them
+TRUNCATE codesystem_level;
+ERROR:  codesystem_level rows are permanent: stored codes are decoded with them
+UPDATE codesystem_code SET label = 'Wheat and other cereals' WHERE code = '0111';
+UPDATE codesystem_system SET publisher = 'Somebody';
+SELECT code_label('toy:0111'), publisher FROM codesystem_system, (SELECT 1) x;
+       code_label        | publisher 
+-------------------------+-----------
+ Wheat and other cereals | Somebody
+(1 row)
+
