@@ -5,7 +5,7 @@ MODULE_big   = codesystem
 OBJS         = codesystem.o engine/cs_pattern.o
 DATA         = codesystem--0.1.0.sql codesystem--0.1.0--0.2.0.sql codesystem--0.2.0.sql
 REGRESS      = define types hierarchy revisions derive pattern
-PG_CPPFLAGS  = -I engine -std=c99 -Wall -Wno-declaration-after-statement -DEXTVERSION=$(EXTVERSION)
+PG_CPPFLAGS  = -I engine -Wall -Wno-declaration-after-statement -DEXTVERSION=$(EXTVERSION)
 EXTRA_CLEAN  = build $(filter-out data/prepared/uk_sic_% data/prepared/nace_rev2.csv data/prepared/gss_entity_types.csv,$(wildcard data/prepared/*))
 PG_CONFIG   ?= pg_config
 PGXS        := $(shell $(PG_CONFIG) --pgxs 2>/dev/null)
